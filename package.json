@@ -1,0 +1,18 @@
+{
+  "name": "arbyte-rest-api",
+  "version": "1.0.0",
+  "description": "Api usada para aprender restful APIs na arbyte",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node server"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Diego Chiodini",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
