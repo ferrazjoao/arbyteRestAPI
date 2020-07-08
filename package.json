@@ -5,14 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "npm test",
-    "start": "node server"
+    "start": "nodemon server.js"
   },
   "keywords": [
     "node"
   ],
-  "author": "Diego Chiodini",
+  "author": "Joao Ferraz Junior",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
