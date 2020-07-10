@@ -1,48 +1,55 @@
-const  { Router } = require ('express');
+const { Router } = require('express');
 const router = new Router();
+const knex = require('../database')
 
 const routeName = '/products';
+const tableName = 'products';
 
 //Lista todos os produtos
 router.get(routeName, (req, res) => {
-    res.json([{ message: "Vai retornar todos os produtos" }]);
+    knex('products').then((result) => res.json(result));
 });
 
 // Pega os dados de um produto 
 router.get(`${routeName}/:id`, (req, res) => {
-    res.json({
-         message: "Vai retornar os dados de um Produto dado um id",
-        id:req.params.id,
-     });
+    knex(tableName)
+    .where({ id: req.params.id }) 
+    .then(([found]) => res.json(found));
 });
 
 //Cria um produto
-router.post(routeName, ( req, res) => {
-
-    const produto = {
-        nome: req.body.nome,
-        preco: req.body.preco
-
-    };
-    console.log(req.body);
-    res.status(201).json({
-        message: 'Vai criar um produto',
-        produtoCriado: produto
-    });
+router.post(routeName, (req, res) => {
+    knex(tableName)
+        .returning('*')
+        .insert(req.body)
+        .then((inserted) => res.status(201).json(inserted));
 });
 
 //Edita os dados de um Produto
-router.patch(`${routeName}/:id`, (req, res) => {
-    res.json({
-        message: "Vai editar os dados de umm Produto dado um id",
-        id: req.params.id,
-
-    });
+router.patch(`${routeName}/:id`, async (req, res) => {
+    try {
+        const [found] = await knex(tableName).where({ id: req.params.id })
+        if (!found) {
+            const err = Error('Not Found')
+            err.status = 404
+            throw err;
+        }
+        const updated = await knex(tableName)
+            .where({ id: req.params.id })
+            .update(req.body);
+        res.json(updated);
+    } catch (err) {
+        res.status(err.status || 500).json({ message: err.message });
+    }
 });
 
 //Deleta um Produto
-router.delete(`${routeName}/:id`, (req, res) => res.status(204).end());
-
+router.delete(`${routeName}/:id`, (req, res) => {
+    knex(tableName)
+        .where({ id: req.params.id })
+        .del()
+        .then(() => res.status(204).end());
+});
 
 module.exports = router;
 

@@ -3,8 +3,8 @@ const routes = require("./src/routes")
 const app = express();
 const port = process.env.PORT || 5555;
 const morgan = require('morgan');
-const bodyParser = require('body-parser')
-const cors = require('cors')
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 app.use(cors());
 app.use(bodyParser.json())
