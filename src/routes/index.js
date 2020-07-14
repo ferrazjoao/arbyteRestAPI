@@ -9,10 +9,9 @@ router.use(products);
 
 // Quando não encontra rota entra aqui
 router.use((req, res, next) => {
-    const erro = new Error('Não encontrado')
+    const erro = new Error('Erro na Consulta')
     erro.status = 404;
     next(erro);
 });
-
 
 module.exports = router;
