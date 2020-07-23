@@ -7,12 +7,12 @@ const create = async (user) => {
     return id;
 };
 
-const getById = async id =>{
-    const [user] = await knex(tableName).where({ id: id });
+const getOne = async (params) =>{
+    const [user] = await knex(tableName).where(params);
     return new User(user);
 };
 
 module.exports ={
     create,
-    getById,
+    getOne,
 }
