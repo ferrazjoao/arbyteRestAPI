@@ -8,7 +8,9 @@ const cors = require('cors');
 
 app.use(cors());
 app.use(bodyParser.json())
-app.use(morgan('dev'));  // apenas dados simples
+app.use(morgan('dev'));
+  
+// apenas dados simples
 
 app.use(routes);
 
